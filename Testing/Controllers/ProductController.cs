@@ -56,4 +56,11 @@ public class ProductController : Controller
         return RedirectToAction("Index");
     }
 
+    public IActionResult DeleteProduct(Product product)
+    {
+        _repo.DeleteProduct(product);
+        return RedirectToAction("Index");
+    }
+
+
 }

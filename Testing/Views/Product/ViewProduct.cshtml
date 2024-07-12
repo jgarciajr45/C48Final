@@ -1,6 +1,6 @@
 ﻿@model Testing.Models.Product
 
-<h3>@Model.Name Information</h3>
+<h2>@Model.Name Details</h2>
 
 <table class="table">
     <tr>
@@ -20,6 +20,11 @@
         <td>@Model.StockLevel</td>
     </tr>
 </table>
+
 <div style="display: block">
-    <a href="/Product/UpdateProduct/@Model.ProductID">Update this Product</a>
+    @using (Html.BeginForm("DeleteProduct", "Product", FormMethod.Post))
+    {
+        <input type="hidden" asp-for="ProductID" value="@Model.ProductID" />
+        <input type="submit" onclick="return confirm('Are you sure?')" value="Delete this product" class="btn btn-danger" />
+    }
 </div>

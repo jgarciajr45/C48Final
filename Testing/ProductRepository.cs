@@ -47,7 +47,12 @@ public class ProductRepository : IProductRepository
         return product;
     }
 
-
+    public void DeleteProduct(Product product)
+    {
+        _conn.Execute("DELETE FROM REVIEWS WHERE ProductID = @id;", new { id = product.ProductID });
+        _conn.Execute("DELETE FROM Sales WHERE ProductID = @id;", new { id = product.ProductID });
+        _conn.Execute("DELETE FROM Products WHERE ProductID = @id;", new { id = product.ProductID });
+    }
 
 }
 
