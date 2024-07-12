@@ -42,4 +42,18 @@ public class ProductController : Controller
         _repo.UpdateProduct(product);
         return RedirectToAction("ViewProduct", new { id = product.ProductID });
     }
+
+    public IActionResult InsertProduct()
+    {
+        var product = _repo.AssignCategory();
+        return View(product);
+    }
+
+    [HttpPost]
+    public IActionResult InsertProductToDatabase(Product productToInsert)
+    {
+        _repo.InsertProduct(productToInsert);
+        return RedirectToAction("Index");
+    }
+
 }
