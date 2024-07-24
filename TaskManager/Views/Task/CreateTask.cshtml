@@ -1,0 +1,51 @@
+﻿@model TaskManager.Models.Task
+
+@{
+    ViewData["Title"] = "Create Task";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="CreateTask">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DueDate" class="control-label"></label>
+        <input asp-for="DueDate" class="form-control" />
+        <span asp-validation-for="DueDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsCompleted" class="control-label"></label>
+        <input asp-for="IsCompleted" class="form-check-input" />
+        <span asp-validation-for="IsCompleted" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UserId" class="control-label">Assign User</label>
+        <select asp-for="UserId" class="form-control">
+            <option value="">Select User</option>
+            @foreach (var user in ViewBag.Users as List<TaskManager.Models.User>)
+            {
+                <option value="@user.Id">@user.Username</option>
+            }
+        </select>
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<a asp-action="Index">Back to List</a>

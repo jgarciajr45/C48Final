@@ -1,25 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MySql.Data.MySqlClient;
-using Testing.Models;
+using TaskManager.Models;
+using TaskManager.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-// Register the database connection service
-builder.Services.AddScoped<IDbConnection>((sp) =>
-    new MySqlConnection(builder.Configuration.GetConnectionString("bestbuy")));
-
-// Register the repository service
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(8, 0, 21))));
 
 var app = builder.Build();
 

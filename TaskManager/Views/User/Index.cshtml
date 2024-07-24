@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TaskManager.Models.User>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Username</td>
+                <td>
+                    <a href="@Url.Action("ViewUser", new { id = user.Id })" class="btn btn-info">View</a>
+                    <a href="@Url.Action("UpdateUser", new { id = user.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("DeleteUser", new { id = user.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("CreateUser")" class="btn btn-primary">Add New User</a>

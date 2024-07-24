@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TaskManager.Models.Task>
+
+@{
+    ViewBag.Title = "Task List";
+    var users = ViewBag.Users as List<TaskManager.Models.User> ?? new List<TaskManager.Models.User>();
+}
+
+<h1>@ViewBag.Title</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Is Completed</th>
+            <th>Assigned User</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>@task.DueDate.ToShortDateString()</td>
+                <td>@(task.IsCompleted ? "Yes" : "No")</td>
+                <td>
+                    @{
+                        var user = users.FirstOrDefault(u => u.Id == task.UserId);
+                        if (user != null)
+                        {
+                            @user.Username
+                        }
+                        else
+                        {
+                            <span>Unassigned</span>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="ViewTask" asp-route-id="@task.Id">View</a> |
+                    <a asp-action="UpdateTask" asp-route-id="@task.Id">Edit</a> |
+                    <a asp-action="DeleteTask" asp-route-id="@task.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
